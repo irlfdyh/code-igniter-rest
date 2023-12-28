@@ -13,6 +13,7 @@ class User extends BaseController
 
     public function index()
     {
+        echo "email: {$this->request->header("email")->getValue()}";
         $users = new UserModel();
         return $this->respond(['user' => $users->findAll()], 200);
     }

@@ -29,7 +29,7 @@ class AuthFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $key = getenv('JWT_SECRET');
-        $header = $request->getHeader('Authorization');
+        $header = $request->header('Authorization');
         $token = null;
 
         // extract token from the header
@@ -49,10 +49,13 @@ class AuthFilter implements FilterInterface
 
         try {
             $decoded = JWT::decode($token, new Key($key, 'HS256'));
-            return $decoded;
+            $payload = (array) $decoded;
+            $email = $payload['email'];
+            $request->appendHeader("email", $email);
+            return $request;
         } catch (Exception $e) {
             $response = service('response');
-            $response->setBody('Access denied');
+            $response->setBody($e->getMessage());
             $response->setStatusCode(401);
             return $response;
         }
