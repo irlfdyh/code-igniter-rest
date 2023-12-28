@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use App\Models\ProductModel;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -54,12 +53,10 @@ class ProductController extends BaseController
     public function update($id = null): ResponseInterface
     {
         $model = new ProductModel();
-        $id = $this->request->getVar('id');
         $data = [
             'name' => $this->request->getVar('name'),
             'price' => $this->request->getVar('price')
         ];
-
         $model->update($id, $data);
 
         $response = [
