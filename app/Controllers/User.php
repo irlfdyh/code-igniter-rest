@@ -14,6 +14,6 @@ class User extends BaseController
     public function index()
     {
         $users = new UserModel();
-        return $this->respond(['users' => $users->findAll()], 200);
+        return $this->respond(['user' => $users->findAll()], 200);
     }
 }
